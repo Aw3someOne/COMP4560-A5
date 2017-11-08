@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assignment5.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,10 +11,12 @@ using System.Windows.Forms;
 
 namespace Assignment5
 {
-    public partial class Form1 : Form
+    public partial class Gui : Form
     {
-        public Form1()
+        public World World { get; }
+        public Gui(World world)
         {
+            World = world;
             InitializeComponent();
         }
     }

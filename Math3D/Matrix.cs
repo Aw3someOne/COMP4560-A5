@@ -6,16 +6,25 @@ using System.Threading.Tasks;
 
 namespace Math3D
 {
-    class Matrix
+    public partial class Matrix
     {
-        protected double[,] M { get; private set; }
-        public double this[int row, int col] { get => M[row, col]; set { M[row, col] = value; } }
-        public int Rows { get => M.GetLength(0); }
-        public int Columns { get => M.GetLength(1); }
+        protected Vector[] M { get; private set; }
+        public Vector this[int row] { get => M[row]; private set { M[row] = value; } }
+        public double this[int row, int col] { get => M[row][col]; set { M[row][col] = value; } }
+        public int Rows { get => M.Length; }
+        public int Columns { get => M[0].Size; }
 
-        public Matrix(int row, int col)
+        public Matrix(int row)
         {
-            Init(row, col);
+            M = new Vector[row];
+        }
+
+        public Matrix(int row, int col) : this(row)
+        {
+            for (int i = 0; i < row; i++)
+            {
+                M[i] = new Vector(size: col);
+            }
         }
 
         public Matrix(params Vector[] v)
@@ -28,78 +37,48 @@ namespace Math3D
                     throw new Exception("Vectors are not the same size");
                 }
             }
-            Init(v.Length, v[0].Size);
-            for (int row = 0; row < v.Length; row++)
+            M = new Vector[v.Length];
+            for (int i = 0; i < v.Length; i++)
             {
-                for (int col = 0; col < c; col++)
-                {
-                    M[row, col] = v[row][col];
-                }
+                M[i] = new Vector(v[i]);
             }
         }
 
+        /*
+         * copy constructor
+         */
         public Matrix(Matrix m)
         {
-            M = new double[m.Rows, m.Columns];
-            Array.Copy(m.M, M, m.Rows * m.Columns);
-        }
-
-        /*
-         * Matrix multiplication
-         */
-        public static Matrix operator *(Matrix lhs, Matrix rhs)
-        {
-            if (lhs.Columns != rhs.Rows)
+            M = new Vector[m.Rows];
+            for (int i = 0; i < m.Rows; i++)
             {
-                throw new Exception("Cannot multiply these two matrices due to dimensions");
+                M[i] = new Vector(m[i]);
             }
-            Matrix r = new Matrix(lhs.Rows, rhs.Columns);
-            for (int row = 0; row < lhs.Rows; row++)
+        }
+
+        public void Transform(params Matrix[] m)
+        {
+            Matrix tNet = new Matrix(m[0]);
+            for (int i = 1; i < m.Length; i++)
             {
-                for (int col = 0; col < rhs.Columns; col++)
-                {
-                    r[row, col] = 0;
-                    for (int i = 0; i < lhs.Columns; i++)
-                    {
-                        r[row, col] += lhs[row, i] * rhs[i, col];
-                    }
-                }
+                tNet *= m[i];
             }
-            return r;
-        }
-
-        /*
-         * Multiple matrix by some constant c
-         */
-        public static Matrix operator *(Matrix m, double c)
-        {
-            Matrix r = new Matrix(m);
-            for (int row = 0; row < m.Rows; row++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int col = 0; col < m.Columns; col++)
-                {
-                    r[row, col] *= c;
-                }
+                this[i].Transform(tNet);
             }
-            return r;
         }
 
-        public static Matrix operator *(double c, Matrix m)
+        public override string ToString()
         {
-            return m * c;
-        }
-
-        /*
-         * Divide matrix by a constant c
-         */
-        public static Matrix operator /(Matrix m, double c)
-        {
-            return m * (1d / c);
-        }
-
-        private void Init(int row, int col)
-        {
-            M = new double[row, col];
+            string s = $"Matrix ({ Rows },{ Columns })";
+            s += "[";
+            foreach (Vector v in M)
+            {
+                s += $"\n{ v }";
+            }
+            s += "]";
+            return s;
         }
     }
 }

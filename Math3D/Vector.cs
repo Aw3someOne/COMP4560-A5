@@ -6,21 +6,11 @@ using System.Threading.Tasks;
 
 namespace Math3D
 {
-    public class Vector
+    public partial class Vector
     {
-        protected double[] V { get; private set; }
-
-        public Vector(params double[] v)
-        {
-            V = new double[v.Length];
-            Array.Copy(v, V, v.Length);
-        }
-
-        public Vector(Vector v) : this(v.V) { }
-
         public int Size { get => V.Length; }
-
-        public double Magnitude {
+        public double Magnitude
+        {
             get
             {
                 double sumsquare = 0;
@@ -31,38 +21,46 @@ namespace Math3D
                 return Math.Sqrt(sumsquare);
             }
         }
-
-        public double this[int key]
+        public Vector Unit { get => this / Magnitude; }
+        public Vector Homogenous
         {
-            get => V[key]; set { V[key] = value; }
+            get
+            {
+                double[] v = new double[Size + 1];
+                Array.Copy(V, v, Size);
+                v[Size] = 1;
+                return new Vector(v);
+            }
+        }
+        public double X { get => this[0]; set { this[0] = value; } }
+        public double Y { get => this[1]; set { this[1] = value; } }
+        public double Z { get => this[2]; set { this[2] = value; } }
+
+        protected double[] V { get; private set; }
+
+        public Vector(params double[] v)
+        {
+            V = new double[v.Length];
+            Array.Copy(v, V, v.Length);
         }
 
-        public static Vector operator +(Vector lhs, Vector rhs)
+        public Vector(int size)
         {
-            if (lhs.Size != rhs.Size)
-            {
-                throw new Exception("Unequal Vector dimensions");
-            }
-            double[] v = new double[lhs.Size];
-            for (int i = 0; i < lhs.Size; i++)
-            {
-                v[i] = lhs[i] + rhs[i];
-            }
-            return new Vector(v);
+            V = new double[size];
         }
 
-        public static Vector operator -(Vector lhs, Vector rhs)
+        public Vector(Vector v) : this(v.V) { }
+
+        public void Transform(Matrix m)
         {
-            if (lhs.Size != rhs.Size)
-            {
-                throw new Exception("Unequal Vector dimensions");
-            }
-            double[] v = new double[lhs.Size];
-            for (int i = 0; i < lhs.Size; i++)
-            {
-                v[i] = lhs[i] - rhs[i];
-            }
-            return new Vector(v);
+            Vector v = Homogenous;
+            v *= m;
+            Array.Copy(v.V, V, Size);
+        }
+
+        public void Translate(int dx, int dy, int dz)
+        {
+            Transform(Matrix.TranslationMatrix(dx, dy, dz));
         }
 
         public static double Dot(Vector lhs, Vector rhs)
@@ -79,13 +77,27 @@ namespace Math3D
             return sumproduct;
         }
 
+        public static Vector Cross(Vector lhs, Vector rhs)
+        {
+            if (!(lhs.Size == 3 && rhs.Size == 3))
+            {
+                throw new Exception("Can only take cross product in 3D");
+            }
+            return new Vector(new double[]
+            {
+                lhs[1] * rhs[2] - lhs[2] * rhs[1],
+                lhs[2] * rhs[0] - lhs[0] * rhs[2],
+                lhs[0] * rhs[1] - lhs[1] * rhs[0]});
+        }
+
         public override string ToString()
         {
-            string s = $"Vector [{ Size }] {{ ";
+            string s = $"Vector ({ Size }) [ ";
             foreach (double d in V)
             {
                 s += $"{d}, ";
             }
+            s += "]";
             return s;
         }
     }
