@@ -19,6 +19,8 @@ namespace Assignment5
         private const int tranH = 75;
         private const double scaleup = 1.1;
         private const double scaledown = 0.9;
+        private const double rot = 0.05;
+        private const double shear = 0.1;
 
         public Gui(World world)
         {
@@ -26,7 +28,12 @@ namespace Assignment5
             World = world;
             renderPanel1.World = World;
             renderPanel1.Dock = DockStyle.Fill;
+
+#if DEBUG
+            World.Shape = new Shape("C:/Users/aw3someone/source/repos/4560/Assignment5-WinForms/Assignment5/Data/Qpoints3D.200810.dat", "C:/Users/aw3someone/source/repos/4560/Assignment5-WinForms/Assignment5/Data/Qlines3D.200810.dat");
             renderPanel1.CalculateWindow();
+#endif
+
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
@@ -44,6 +51,12 @@ namespace Assignment5
             rightToolStripMenuItem.Click += new EventHandler(MenuItemTranslateRight_Click);
             scaleUpToolStripMenuItem.Click += new EventHandler(MenuItemScaleUp_Click);
             scaleDownToolStripMenuItem.Click += new EventHandler(MenuItemScaleDown_Click);
+            rotXToolStripMenuItem.Click += new EventHandler(MenuItemRotateX_Click);
+            rotYToolStripMenuItem.Click += new EventHandler(MenuItemRotateY_Click);
+            rotZToolStripMenuItem.Click += new EventHandler(MenuItemRotateZ_Click);
+            resetToolStripMenuItem.Click += new EventHandler(MenuItemReset_Click);
+            shearRightToolStripMenuItem.Click += new EventHandler(MenuItemShearRight_Click);
+            shearLeftToolStripMenuItem.Click += new EventHandler(MenuItemShearLeft_Click);
         }
 
         private void MenuItemFileOpen_Click(object sender, System.EventArgs e)
@@ -99,6 +112,50 @@ namespace Assignment5
             World.Shape.TransformAboutPoint(
                 World.Shape.Centroid,
                 Matrix.ScaleMatrix(scaledown, scaledown, scaledown));
+            renderPanel1.Invalidate();
+        }
+        private void MenuItemRotateX_Click(object sender, EventArgs e)
+        {
+            World.Shape.TransformAboutPoint(
+                World.Shape.Centroid,
+                Matrix.RotationMatrixX(rot));
+            renderPanel1.Invalidate();
+        }
+        private void MenuItemRotateY_Click(object sender, EventArgs e)
+        {
+            World.Shape.TransformAboutPoint(
+                World.Shape.Centroid,
+                Matrix.RotationMatrixY(rot));
+            renderPanel1.Invalidate();
+        }
+        private void MenuItemRotateZ_Click(object sender, EventArgs e)
+        {
+            World.Shape.TransformAboutPoint(
+                World.Shape.Centroid,
+                Matrix.RotationMatrixZ(rot));
+            renderPanel1.Invalidate();
+        }
+        private void MenuItemReset_Click(object sender, EventArgs e)
+        {
+            World.Shape.Reset();
+            renderPanel1.Invalidate();
+        }
+        private void MenuItemShearRight_Click(object sender, EventArgs e)
+        {
+            Vector c = World.Shape.Centroid;
+            double min = World.Shape.MinY;
+            World.Shape.TransformAboutPoint(
+                new Vector(c.X, min, c.Z),
+                Matrix.ShearXWRTYMatrix(shear));
+            renderPanel1.Invalidate();
+        }
+        private void MenuItemShearLeft_Click(object sender, EventArgs e)
+        {
+            Vector c = World.Shape.Centroid;
+            double min = World.Shape.MinY;
+            World.Shape.TransformAboutPoint(
+                new Vector(c.X, min, c.Z),
+                Matrix.ShearXWRTYMatrix(-shear));
             renderPanel1.Invalidate();
         }
     }

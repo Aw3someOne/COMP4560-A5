@@ -26,10 +26,18 @@ namespace Assignment5.Model
         public double MidY { get => Mid(1); }
         public double MidZ { get => Mid(2); }
 
+        private Matrix SavedPoints;
+
         public Shape(string pointPath, string linePath)
         {
             Points = Parser.GetPointsFromFile(pointPath);
+            SavedPoints = new Matrix(Points);
             Lines = Parser.GetLinesFromFile(linePath);
+        }
+
+        public void Reset()
+        {
+            Points = new Matrix(SavedPoints);
         }
 
         public void Transform(params Matrix[] m) => Points.Transform(m);

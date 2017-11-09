@@ -41,7 +41,13 @@
             this.rightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scaleUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scaleDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotYToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotZToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shearRightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renderPanel1 = new Assignment5.RenderPanel();
+            this.shearLeftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +60,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(920, 40);
+            this.menuStrip1.Size = new System.Drawing.Size(784, 40);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -103,48 +109,84 @@
             this.leftToolStripMenuItem,
             this.rightToolStripMenuItem,
             this.scaleUpToolStripMenuItem,
-            this.scaleDownToolStripMenuItem});
-            this.menuStrip2.Location = new System.Drawing.Point(920, 0);
+            this.scaleDownToolStripMenuItem,
+            this.rotXToolStripMenuItem,
+            this.rotYToolStripMenuItem,
+            this.rotZToolStripMenuItem,
+            this.resetToolStripMenuItem,
+            this.shearRightToolStripMenuItem,
+            this.shearLeftToolStripMenuItem});
+            this.menuStrip2.Location = new System.Drawing.Point(784, 0);
             this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(54, 929);
+            this.menuStrip2.Size = new System.Drawing.Size(190, 929);
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip2";
             // 
             // upToolStripMenuItem
             // 
             this.upToolStripMenuItem.Name = "upToolStripMenuItem";
-            this.upToolStripMenuItem.Size = new System.Drawing.Size(41, 36);
+            this.upToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
             this.upToolStripMenuItem.Text = "↑";
             // 
             // downToolStripMenuItem
             // 
             this.downToolStripMenuItem.Name = "downToolStripMenuItem";
-            this.downToolStripMenuItem.Size = new System.Drawing.Size(41, 36);
+            this.downToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
             this.downToolStripMenuItem.Text = "↓";
             // 
             // leftToolStripMenuItem
             // 
             this.leftToolStripMenuItem.Name = "leftToolStripMenuItem";
-            this.leftToolStripMenuItem.Size = new System.Drawing.Size(41, 36);
+            this.leftToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
             this.leftToolStripMenuItem.Text = "←";
             // 
             // rightToolStripMenuItem
             // 
             this.rightToolStripMenuItem.Name = "rightToolStripMenuItem";
-            this.rightToolStripMenuItem.Size = new System.Drawing.Size(41, 36);
+            this.rightToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
             this.rightToolStripMenuItem.Text = "→";
             // 
             // scaleUpToolStripMenuItem
             // 
             this.scaleUpToolStripMenuItem.Name = "scaleUpToolStripMenuItem";
-            this.scaleUpToolStripMenuItem.Size = new System.Drawing.Size(41, 36);
+            this.scaleUpToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
             this.scaleUpToolStripMenuItem.Text = "+";
             // 
             // scaleDownToolStripMenuItem
             // 
             this.scaleDownToolStripMenuItem.Name = "scaleDownToolStripMenuItem";
-            this.scaleDownToolStripMenuItem.Size = new System.Drawing.Size(41, 36);
+            this.scaleDownToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
             this.scaleDownToolStripMenuItem.Text = "–";
+            // 
+            // rotXToolStripMenuItem
+            // 
+            this.rotXToolStripMenuItem.Name = "rotXToolStripMenuItem";
+            this.rotXToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
+            this.rotXToolStripMenuItem.Text = "⤺x";
+            // 
+            // rotYToolStripMenuItem
+            // 
+            this.rotYToolStripMenuItem.Name = "rotYToolStripMenuItem";
+            this.rotYToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
+            this.rotYToolStripMenuItem.Text = "⤺y";
+            // 
+            // rotZToolStripMenuItem
+            // 
+            this.rotZToolStripMenuItem.Name = "rotZToolStripMenuItem";
+            this.rotZToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
+            this.rotZToolStripMenuItem.Text = "⤺z";
+            // 
+            // resetToolStripMenuItem
+            // 
+            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
+            this.resetToolStripMenuItem.Text = "Reset";
+            // 
+            // shearRightToolStripMenuItem
+            // 
+            this.shearRightToolStripMenuItem.Name = "shearRightToolStripMenuItem";
+            this.shearRightToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
+            this.shearRightToolStripMenuItem.Text = "□→";
             // 
             // renderPanel1
             // 
@@ -156,6 +198,12 @@
             this.renderPanel1.Size = new System.Drawing.Size(200, 100);
             this.renderPanel1.TabIndex = 2;
             this.renderPanel1.World = null;
+            // 
+            // toolStripMenuItem1
+            // 
+            this.shearLeftToolStripMenuItem.Name = "toolStripMenuItem1";
+            this.shearLeftToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
+            this.shearLeftToolStripMenuItem.Text = "←□";
             // 
             // Gui
             // 
@@ -194,6 +242,12 @@
         private System.Windows.Forms.ToolStripMenuItem rightToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem scaleUpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem scaleDownToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rotXToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rotYToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rotZToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem shearRightToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem shearLeftToolStripMenuItem;
     }
 }
 
