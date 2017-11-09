@@ -67,17 +67,11 @@ namespace Math3D
             return r;
         }
 
-        public static Matrix operator *(double c, Matrix m)
-        {
-            return m * c;
-        }
+        public static Matrix operator *(double c, Matrix m) => m * c;
 
         /*
          * Divide matrix by a constant c
          */
-        public static Matrix operator /(Matrix m, double c)
-        {
-            return m * (1d / c);
-        }
+        public static Matrix operator /(Matrix m, double c) => m * (1d / c);
     }
 }

@@ -24,20 +24,6 @@ namespace Math3D
             return new Vector(v);
         }
 
-        public static Vector operator -(Vector lhs, Vector rhs)
-        {
-            if (lhs.Size != rhs.Size)
-            {
-                throw new Exception("Unequal Vector dimensions");
-            }
-            double[] v = new double[lhs.Size];
-            for (int i = 0; i < lhs.Size; i++)
-            {
-                v[i] = lhs[i] - rhs[i];
-            }
-            return new Vector(v);
-        }
-
         public static Vector operator *(Vector v, double c)
         {
             Vector r = new Vector(v);
@@ -48,24 +34,9 @@ namespace Math3D
             return r;
         }
 
-        public static Vector operator *(double c, Vector v)
-        {
-            return v * c;
-        }
-
-        public static Vector operator /(Vector v, double c)
-        {
-            return v * (1d / c);
-        }
-
-        public static Vector operator -(Vector v)
-        {
-            Vector r = new Vector(size: v.Size);
-            for (int i = 0; i < v.Size; i++)
-            {
-                r[i] = -v[i];
-            }
-            return r;
-        }
+        public static Vector operator -(Vector lhs, Vector rhs) => lhs + -rhs;
+        public static Vector operator *(double c, Vector v) => v * c;
+        public static Vector operator /(Vector v, double c) => v * (1d / c);
+        public static Vector operator -(Vector v) => v * -1;
     }
 }

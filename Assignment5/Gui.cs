@@ -16,8 +16,6 @@ namespace Assignment5
     {
         public World World { get; }
         private Matrix _windowingMatrix;
-        private double _offsetX;
-        private double _offsetY;
         private double _scaleFactor;
 
         public Gui(World world)
@@ -38,8 +36,6 @@ namespace Assignment5
                 new Vector(m.X, m.Y, 0));
             Matrix scaleMatrix = Matrix.ScaleMatrix(_scaleFactor, _scaleFactor, _scaleFactor);
             Matrix centerMatrix = Matrix.TranslationMatrix(ClientSize.Width / 2, ClientSize.Height / 2, 0);
-            //_offsetX = ClientSize.Width / 2;
-            //_offsetY = ClientSize.Height / 2;
             _windowingMatrix = orthographicMatrix * scaleMatrix * centerMatrix;
 #if DEBUG
             //Console.WriteLine(orthographicMatrix);
