@@ -15,18 +15,24 @@ namespace Assignment5
         protected override void OnPaint(PaintEventArgs e)
         {
             //base.OnPaint(e);
-            Graphics graphics = e.Graphics;
-            Pen pen = new Pen(Color.White, 3);
+            if (World.Shape != null) {
+                Graphics graphics = e.Graphics;
+                graphics.Clear(Color.Black);
+                Pen pen = new Pen(Color.White, 3);
 
-            Matrix screen = World.Shape.Points * Matrix.Identity(4);
-            foreach (Tuple<int, int> line in World.Shape.Lines)
-            {
-                graphics.DrawLine(
-                    pen,
-                    (int)screen[line.Item1].X,
-                    (int)screen[line.Item1].Y,
-                    (int)screen[line.Item2].X,
-                    (int)screen[line.Item2].Y);
+                Matrix screen = new Matrix(World.Shape.Points);
+
+                // windowing
+                screen.Transform(_windowingMatrix);
+                foreach (Tuple<int, int> line in World.Shape.Lines)
+                {
+                    graphics.DrawLine(
+                        pen,
+                        (int)screen[line.Item1].X,
+                        Height - (int)screen[line.Item1].Y,
+                        (int)screen[line.Item2].X,
+                        Height - (int)screen[line.Item2].Y);
+                }
             }
         }
     }

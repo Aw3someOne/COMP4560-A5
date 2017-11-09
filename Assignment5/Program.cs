@@ -2,6 +2,7 @@
 using Math3D;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,7 +20,7 @@ namespace Assignment5
         static void Main()
         {
             World = new World();
-            World.Shape = new Shape();
+            World.Shape = new Shape("C:/Users/aw3someone/source/repos/4560/Assignment5/Assignment5/Data/Qpoints3D.200810.dat", "C:/Users/aw3someone/source/repos/4560/Assignment5/Assignment5/Data/Qlines3D.200810.dat");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Gui(World));
@@ -33,8 +34,8 @@ namespace Assignment5
             Console.WriteLine($"unit vector v: { vUnit }");
             Vector uUnit = Vector.Cross(nUnit, vUnit);
             Console.WriteLine($"unit vector u: { uUnit }");
-            */
             A3();
+            */
         }
         private static void A3()
         {

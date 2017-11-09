@@ -27,10 +27,29 @@ namespace Assignment5.Data
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine("REEEEEEEEEEEEEEEEEEEEEEEEE");
+                    Console.Error.WriteLine($"REEEEEEEEEEEEEEEEEEEEEEEEE { e }");
                 }
             }
             return new Matrix(points.ToArray());
+        }
+
+        public static Tuple<int, int>[] GetLinesFromFile(string path)
+        {
+            string[] lines = File.ReadLines(path).ToArray();
+            List<Tuple<int, int>> linesList = new List<Tuple<int, int>>();
+            foreach (string line in lines)
+            {
+                string[] l = line.Split(',', ' '); // comma or space
+                try
+                {
+                    linesList.Add(new Tuple<int, int>(int.Parse(l[0]), int.Parse(l[1])));
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine(e);
+                }
+            }
+            return linesList.ToArray();
         }
     }
 }

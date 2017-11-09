@@ -1,4 +1,5 @@
-﻿using Math3D;
+﻿using Assignment5.Data;
+using Math3D;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,90 @@ namespace Assignment5.Model
     {
         public Matrix Points { get; set; }
         public Tuple<int, int>[] Lines { get; set; }
+        public Vector Centroid { get => new Vector(MidX, MidY, MidZ); }
+        public double DeltaX { get => Delta(0); }
+        public double DeltaY { get => Delta(1); }
+        public double DeltaZ { get => Delta(2); }
+        public double MinX { get => Min(0); }
+        public double MinY { get => Min(1); }
+        public double MinZ { get => Min(2); }
+        public double MaxX { get => Max(0); }
+        public double MaxY { get => Max(1); }
+        public double MaxZ { get => Max(2); }
+        public double MidX { get => Mid(0); }
+        public double MidY { get => Mid(1); }
+        public double MidZ { get => Mid(2); }
+
+        public Shape(string pointPath, string linePath)
+        {
+            Points = Parser.GetPointsFromFile(pointPath);
+            Lines = Parser.GetLinesFromFile(linePath);
+        }
+
+        private double Delta(int index)
+        {
+            double max = Points[0, index];
+            double min = Points[0, index];
+            for (int i = 1; i < Points.Rows; i++)
+            {
+                double x = Points[i].X;
+                if (x > max)
+                {
+                    max = x;
+                }
+                else if (x < min)
+                {
+                    min = x;
+                }
+            }
+            return max - min;
+        }
+
+        private double Mid(int index)
+        {
+            double max = Points[0, index];
+            double min = Points[0, index];
+            for (int i = 1; i < Points.Rows; i++)
+            {
+                double x = Points[i].X;
+                if (x > max)
+                {
+                    max = x;
+                }
+                else if (x < min)
+                {
+                    min = x;
+                }
+            }
+            return (max + min) / 2;
+        }
+
+        private double Max(int index)
+        {
+            double max = Points[0, index];
+            for (int i = 1; i < Points.Rows; i++)
+            {
+                double x = Points[i].X;
+                if (x > max)
+                {
+                    max = x;
+                }
+            }
+            return max;
+        }
+
+        private double Min(int index)
+        {
+            double min = Points[0, index];
+            for (int i = 1; i < Points.Rows; i++)
+            {
+                double x = Points[i].X;
+                if (x < min)
+                {
+                    min = x;
+                }
+            }
+            return min;
+        }
     }
 }
