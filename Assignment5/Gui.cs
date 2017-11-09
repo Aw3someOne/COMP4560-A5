@@ -16,6 +16,9 @@ namespace Assignment5
     {
         public World World { get; }
         private Matrix _windowingMatrix;
+        private double _offsetX;
+        private double _offsetY;
+        private double _scaleFactor;
 
         public Gui(World world)
         {
@@ -26,14 +29,23 @@ namespace Assignment5
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             Text = "COMP 4560: Assignment 5";
             ResizeRedraw = true;
-            ClientSize = new Size(800, 600);
+            ClientSize = new Size(1280, 1024);
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            double scaleFactor = Height / 2 / World.Shape.DeltaY;
-            Matrix scaleMatrix = Matrix.ScaleMatrix(scaleFactor, scaleFactor, scaleFactor);
-            double offsetX = Width / 2 - scaleFactor *  World.Shape.MidX;
-            double offsetY = Height / 2 - scaleFactor * World.Shape.MidY;
-            Matrix offsetMatrix = Matrix.TranslationMatrix(offsetX, offsetY, 0);
-            _windowingMatrix = scaleMatrix * offsetMatrix;
+            _scaleFactor = ClientSize.Height / 2 / World.Shape.DeltaY;
+            Vector m = World.Shape.Centroid;
+            Matrix orthographicMatrix = Matrix.OrthographicProjectionMatrix(
+                new Vector(m.X, m.Y, 1),
+                new Vector(m.X, m.Y, 0));
+            Matrix scaleMatrix = Matrix.ScaleMatrix(_scaleFactor, _scaleFactor, _scaleFactor);
+            Matrix centerMatrix = Matrix.TranslationMatrix(ClientSize.Width / 2, ClientSize.Height / 2, 0);
+            //_offsetX = ClientSize.Width / 2;
+            //_offsetY = ClientSize.Height / 2;
+            _windowingMatrix = orthographicMatrix * scaleMatrix * centerMatrix;
+#if DEBUG
+            //Console.WriteLine(orthographicMatrix);
+            Console.WriteLine(_windowingMatrix);
+            //Console.WriteLine($"Client Dimensions: { ClientSize.Width }, { ClientSize.Height }");
+#endif
         }
     }
 }

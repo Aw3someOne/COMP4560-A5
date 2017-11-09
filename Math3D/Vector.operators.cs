@@ -57,5 +57,15 @@ namespace Math3D
         {
             return v * (1d / c);
         }
+
+        public static Vector operator -(Vector v)
+        {
+            Vector r = new Vector(size: v.Size);
+            for (int i = 0; i < v.Size; i++)
+            {
+                r[i] = -v[i];
+            }
+            return r;
+        }
     }
 }

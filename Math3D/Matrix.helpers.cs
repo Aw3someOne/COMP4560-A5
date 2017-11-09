@@ -65,7 +65,7 @@ namespace Math3D
             });
         }
 
-        public static Matrix Identity(int row)
+        public static Matrix IdentityMatrix(int row)
         {
             Matrix m = new Matrix(row, row);
             for (int i = 0; i < row; i++)
@@ -73,6 +73,22 @@ namespace Math3D
                 m[i, i] = 1;
             }
             return m;
+        }
+
+        public static Matrix OrthographicProjectionMatrix(Vector p1, Vector p2)
+        {
+            Vector n = (p2 - p1).Unit;
+            Vector z = Vector.YUnitVector;
+            Vector v = (z - (Vector.Dot(z, n) * n)).Unit;
+            Vector u = Vector.Cross(n, v);
+            Vector r = new Vector(p1);
+            return new Matrix(new Vector[]
+            {
+                new Vector(u.X, v.X, n.X, 0),
+                new Vector(u.Y, v.Y, n.Y, 0),
+                new Vector(u.Z, v.Z, n.Z, 0),
+                new Vector(Vector.Dot(-r, u), Vector.Dot(-r, v), Vector.Dot(-r, n), 1),
+            });
         }
 
         //public static Matrix ShearXWRTYMatrix()
