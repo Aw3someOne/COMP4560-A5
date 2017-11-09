@@ -10,14 +10,41 @@ using System.Windows.Forms;
 
 namespace Assignment5
 {
-    partial class Gui
+    partial class RenderPanel: Panel
     {
+        private Matrix _windowingMatrix;
+
+        public World World { get; set; }
+        public double ScaleFactor { get; set; }
+
+        public RenderPanel()
+        {
+        }
+
+        public void CalculateWindow()
+        {
+            ScaleFactor = ClientSize.Height / 2 / World.Shape.DeltaY;
+            Vector m = World.Shape.Centroid;
+            Matrix orthographicMatrix = Matrix.OrthographicProjectionMatrix(
+                new Vector(m.X, m.Y, 1),
+                new Vector(m.X, m.Y, 0));
+            Matrix scaleMatrix = Matrix.ScaleMatrix(ScaleFactor, ScaleFactor, ScaleFactor);
+            Matrix centerMatrix = Matrix.TranslationMatrix(ClientSize.Width / 2, ClientSize.Height / 2, 0);
+            _windowingMatrix = orthographicMatrix * scaleMatrix * centerMatrix;
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            Invalidate();
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             //base.OnPaint(e);
             Graphics graphics = e.Graphics;
             graphics.Clear(Color.Black);
-            if (World.Shape != null) {
+            if (World != null && World.Shape != null) {
                 graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                 Pen pen = new Pen(Color.White, 3);
 

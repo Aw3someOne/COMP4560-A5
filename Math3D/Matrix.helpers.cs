@@ -17,6 +17,8 @@ namespace Math3D
                 new Vector(0, 0, 0, 1)
             });
 
+        public static Matrix TranslationMatrix(Vector v) => TranslationMatrix(v.X, v.Y, v.Z);
+
         public static Matrix TranslationMatrix(double dx, double dy, double dz)
             => new Matrix(new Vector[]
             {

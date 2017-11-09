@@ -8,7 +8,6 @@ namespace Assignment5.Model
 {
     public class World
     {
-        //public List<Shape> Shapes { get; private set; }
         public Shape Shape { get; set; }
     }
 }

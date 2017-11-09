@@ -56,6 +56,20 @@ namespace Math3D
             }
         }
 
+        public void TransformAboutPoint(Vector p, params Matrix[] m)
+        {
+            Matrix tNet = Matrix.TranslationMatrix(-p);
+            for (int i = 0; i < m.Length; i++)
+            {
+                tNet *= m[i];
+            }
+            tNet *= Matrix.TranslationMatrix(p);
+            for (int i = 0; i < Rows; i++)
+            {
+                this[i].Transform(tNet);
+            }
+        }
+
         public void Transform(params Matrix[] m)
         {
             Matrix tNet = new Matrix(m[0]);

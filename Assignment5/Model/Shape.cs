@@ -32,13 +32,16 @@ namespace Assignment5.Model
             Lines = Parser.GetLinesFromFile(linePath);
         }
 
+        public void Transform(params Matrix[] m) => Points.Transform(m);
+        public void TransformAboutPoint(Vector p, params Matrix[] m) => Points.TransformAboutPoint(p, m);
+
         private double Delta(int index)
         {
             double max = Points[0, index];
             double min = Points[0, index];
             for (int i = 1; i < Points.Rows; i++)
             {
-                double x = Points[i].X;
+                double x = Points[i, index];
                 if (x > max)
                 {
                     max = x;
@@ -57,7 +60,7 @@ namespace Assignment5.Model
             double min = Points[0, index];
             for (int i = 1; i < Points.Rows; i++)
             {
-                double x = Points[i].X;
+                double x = Points[i, index];
                 if (x > max)
                 {
                     max = x;
@@ -75,7 +78,7 @@ namespace Assignment5.Model
             double max = Points[0, index];
             for (int i = 1; i < Points.Rows; i++)
             {
-                double x = Points[i].X;
+                double x = Points[i, index];
                 if (x > max)
                 {
                     max = x;
@@ -89,7 +92,7 @@ namespace Assignment5.Model
             double min = Points[0, index];
             for (int i = 1; i < Points.Rows; i++)
             {
-                double x = Points[i].X;
+                double x = Points[i, index];
                 if (x < min)
                 {
                     min = x;
