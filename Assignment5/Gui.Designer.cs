@@ -46,8 +46,11 @@
             this.rotZToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shearRightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.renderPanel1 = new Assignment5.RenderPanel();
             this.shearLeftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotXInfinityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renderPanel1 = new Assignment5.RenderPanel();
+            this.rotYInfinityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotZInfinityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -115,7 +118,10 @@
             this.rotZToolStripMenuItem,
             this.resetToolStripMenuItem,
             this.shearRightToolStripMenuItem,
-            this.shearLeftToolStripMenuItem});
+            this.shearLeftToolStripMenuItem,
+            this.rotXInfinityToolStripMenuItem,
+            this.rotYInfinityToolStripMenuItem,
+            this.rotZInfinityToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(784, 0);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Size = new System.Drawing.Size(190, 929);
@@ -188,6 +194,18 @@
             this.shearRightToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
             this.shearRightToolStripMenuItem.Text = "□→";
             // 
+            // shearLeftToolStripMenuItem
+            // 
+            this.shearLeftToolStripMenuItem.Name = "shearLeftToolStripMenuItem";
+            this.shearLeftToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
+            this.shearLeftToolStripMenuItem.Text = "←□";
+            // 
+            // rotXInfinityToolStripMenuItem
+            // 
+            this.rotXInfinityToolStripMenuItem.Name = "rotXInfinityToolStripMenuItem";
+            this.rotXInfinityToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
+            this.rotXInfinityToolStripMenuItem.Text = "⤺x∞";
+            // 
             // renderPanel1
             // 
             this.renderPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -199,11 +217,17 @@
             this.renderPanel1.TabIndex = 2;
             this.renderPanel1.World = null;
             // 
-            // toolStripMenuItem1
+            // yToolStripMenuItem
             // 
-            this.shearLeftToolStripMenuItem.Name = "toolStripMenuItem1";
-            this.shearLeftToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
-            this.shearLeftToolStripMenuItem.Text = "←□";
+            this.rotYInfinityToolStripMenuItem.Name = "yToolStripMenuItem";
+            this.rotYInfinityToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
+            this.rotYInfinityToolStripMenuItem.Text = "⤺y∞";
+            // 
+            // zToolStripMenuItem
+            // 
+            this.rotZInfinityToolStripMenuItem.Name = "zToolStripMenuItem";
+            this.rotZInfinityToolStripMenuItem.Size = new System.Drawing.Size(177, 36);
+            this.rotZInfinityToolStripMenuItem.Text = "⤺z∞";
             // 
             // Gui
             // 
@@ -248,6 +272,9 @@
         private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem shearRightToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem shearLeftToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rotXInfinityToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rotYInfinityToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rotZInfinityToolStripMenuItem;
     }
 }
 

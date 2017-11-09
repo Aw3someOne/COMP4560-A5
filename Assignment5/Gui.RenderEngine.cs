@@ -19,6 +19,11 @@ namespace Assignment5
 
         public RenderPanel()
         {
+            this.SetStyle(
+                ControlStyles.AllPaintingInWmPaint |
+                ControlStyles.UserPaint |
+                ControlStyles.DoubleBuffer,
+                true);
         }
 
         public void CalculateWindow()
