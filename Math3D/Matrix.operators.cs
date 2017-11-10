@@ -8,6 +8,9 @@ namespace Math3D
 {
     public partial class Matrix
     {
+        public Vector this[int row] { get => M[row]; set { M[row] = value; } }
+        public double this[int row, int col] { get => M[row][col]; set { M[row][col] = value; } }
+
         public static Vector operator *(Vector v, Matrix m)
         {
             if (v.Size != m.Rows)

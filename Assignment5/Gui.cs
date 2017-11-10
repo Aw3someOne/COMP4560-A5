@@ -22,7 +22,7 @@ namespace Assignment5
         private const double _scaledown = 0.9;
         private const double _rot = 0.05;
         private const double _shear = 0.1;
-        private const double _interval = 20;
+        private const double _interval = 1;
         private System.Timers.Timer timer;
 
         public Gui(World world)
@@ -34,6 +34,8 @@ namespace Assignment5
 
 #if DEBUG
             World.Shape = new Shape("C:/Users/aw3someone/source/repos/4560/Assignment5-WinForms/Assignment5/Data/Qpoints3D.200810.dat", "C:/Users/aw3someone/source/repos/4560/Assignment5-WinForms/Assignment5/Data/Qlines3D.200810.dat");
+            renderPanel1.CameraLocation = World.Shape.Centroid + 5 * Vector.ZUnitVector;
+            renderPanel1.CameraTarget = World.Shape.Centroid;
             renderPanel1.CalculateWindow();
 #endif
 
@@ -48,6 +50,7 @@ namespace Assignment5
 
             openToolStripMenuItem.Click += new EventHandler(MenuItemFileOpen_Click);
             exitToolStripMenuItem.Click += new EventHandler(MenuItemFileExit_Click);
+            perspectiveToolStripMenuItem.Click += new EventHandler(MenuItemPerspective_Click);
             upToolStripMenuItem.Click += new EventHandler(MenuItemTranslateUp_Click);
             downToolStripMenuItem.Click += new EventHandler(MenuItemTranslateDown_Click);
             leftToolStripMenuItem.Click += new EventHandler(MenuItemTranslateLeft_Click);
@@ -79,12 +82,21 @@ namespace Assignment5
             if (openPointsDialog.ShowDialog() == DialogResult.OK && openLinesDialog.ShowDialog() == DialogResult.OK)
             {
                 World.Shape = new Shape(openPointsDialog.FileName, openLinesDialog.FileName);
+                renderPanel1.CameraLocation = World.Shape.Centroid + 5 * Vector.ZUnitVector;
+                renderPanel1.CameraTarget = World.Shape.Centroid;
                 renderPanel1.CalculateWindow();
                 renderPanel1.Invalidate();                
             }
         }
         
         private void MenuItemFileExit_Click(object sender, EventArgs e) => Application.Exit();
+        private void MenuItemPerspective_Click(object sender, EventArgs e)
+        {
+            renderPanel1.IsPerspective = !renderPanel1.IsPerspective;
+            perspectiveToolStripMenuItem.BackColor = renderPanel1.IsPerspective ? SystemColors.MenuHighlight : SystemColors.Control;
+            perspectiveToolStripMenuItem.Invalidate();
+            renderPanel1.Invalidate();
+        }
 
         private void MenuItemTranslateUp_Click(object sender, EventArgs e)
         {
@@ -116,7 +128,8 @@ namespace Assignment5
         {
             timer.Stop();
             World.Shape.TransformAboutPoint(
-                World.Shape.Centroid,
+                World.Shape.Points[0],
+                //World.Shape.Centroid,
                 Matrix.ScaleMatrix(_scaleup, _scaleup, _scaleup));
             renderPanel1.Invalidate();
         }
@@ -124,7 +137,8 @@ namespace Assignment5
         {
             timer.Stop();
             World.Shape.TransformAboutPoint(
-                World.Shape.Centroid,
+                World.Shape.Points[0],
+                //World.Shape.Centroid,
                 Matrix.ScaleMatrix(_scaledown, _scaledown, _scaledown));
             renderPanel1.Invalidate();
         }
@@ -137,13 +151,11 @@ namespace Assignment5
         {
             timer.Stop();
             RotateY(sender, e);
-
         }
         private void MenuItemRotateZ_Click(object sender, EventArgs e)
         {
             timer.Stop();
             RotateZ(sender, e);
-
         }
         private void MenuItemReset_Click(object sender, EventArgs e)
         {
@@ -154,41 +166,48 @@ namespace Assignment5
         private void MenuItemShearRight_Click(object sender, EventArgs e)
         {
             timer.Stop();
-            Vector c = World.Shape.Centroid;
-            double min = World.Shape.MinY;
-            World.Shape.TransformAboutPoint(
-                new Vector(c.X, min, c.Z),
-                Matrix.ShearXWRTYMatrix(_shear));
+            World.Shape.TransformAboutPoint(World.Shape.Points[World.Shape.Points.Rows - 1], Matrix.ShearXWRTYMatrix(_shear));
+            //World.Shape.Transform(Matrix.ShearXWRTYMatrix(_shear));
+            //Vector c = World.Shape.Centroid;
+            //double min = World.Shape.MinY;
+            //World.Shape.TransformAboutPoint(
+            //    new Vector(c.X, min, c.Z),
+            //    Matrix.ShearXWRTYMatrix(_shear));
             renderPanel1.Invalidate();
         }
         private void MenuItemShearLeft_Click(object sender, EventArgs e)
         {
             timer.Stop();
-            Vector c = World.Shape.Centroid;
-            double min = World.Shape.MinY;
-            World.Shape.TransformAboutPoint(
-                new Vector(c.X, min, c.Z),
-                Matrix.ShearXWRTYMatrix(-_shear));
+            World.Shape.TransformAboutPoint(World.Shape.Points[World.Shape.Points.Rows - 1], Matrix.ShearXWRTYMatrix(-_shear));
+            //World.Shape.Transform(Matrix.ShearXWRTYMatrix(-_shear));
+            //Vector c = World.Shape.Centroid;
+            //double min = World.Shape.MinY;
+            //World.Shape.TransformAboutPoint(
+            //    new Vector(c.X, min, c.Z),
+            //    Matrix.ShearXWRTYMatrix(-_shear));
             renderPanel1.Invalidate();
         }
         private void RotateX(object sender, EventArgs e)
         {
             World.Shape.TransformAboutPoint(
-                World.Shape.Centroid,
+                World.Shape.Points[0],
+                //World.Shape.Centroid,
                 Matrix.RotationMatrixX(_rot));
             renderPanel1.Invalidate();
         }
         private void RotateY(object sender, EventArgs e)
         {
             World.Shape.TransformAboutPoint(
-                World.Shape.Centroid,
+                World.Shape.Points[0],
+                //World.Shape.Centroid,
                 Matrix.RotationMatrixY(_rot));
             renderPanel1.Invalidate();
         }
         private void RotateZ(object sender, EventArgs e)
         {
             World.Shape.TransformAboutPoint(
-                World.Shape.Centroid,
+                World.Shape.Points[0],
+                //World.Shape.Centroid,
                 Matrix.RotationMatrixZ(_rot));
             renderPanel1.Invalidate();
         }

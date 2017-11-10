@@ -9,8 +9,6 @@ namespace Math3D
     public partial class Matrix
     {
         protected Vector[] M { get; private set; }
-        public Vector this[int row] { get => M[row]; private set { M[row] = value; } }
-        public double this[int row, int col] { get => M[row][col]; set { M[row][col] = value; } }
         public int Rows { get => M.Length; }
         public int Columns { get => M[0].Size; }
 

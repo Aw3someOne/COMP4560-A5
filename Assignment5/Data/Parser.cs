@@ -30,6 +30,7 @@ namespace Assignment5.Data
                     Console.Error.WriteLine($"REEEEEEEEEEEEEEEEEEEEEEEEE { e }");
                 }
             }
+            points.Add(new Vector(0, 0, 0));
             return new Matrix(points.ToArray());
         }
 
