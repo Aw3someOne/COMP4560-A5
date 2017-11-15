@@ -21,9 +21,11 @@ namespace Assignment5
         private const double _scaleup = 1.1;
         private const double _scaledown = 0.9;
         private const double _rot = 0.05;
+        private const double _rotrate = 0.00000005;
         private const double _shear = 0.1;
-        private const double _interval = 1;
+        private const double _interval = 15;
         private System.Timers.Timer timer;
+        private long _ticks = 0;
 
         public Gui(World world)
         {
@@ -100,6 +102,7 @@ namespace Assignment5
 
         private void MenuItemTranslateUp_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
             World.Shape.Transform(Matrix.TranslationMatrix(0, _tranV / renderPanel1.ScaleFactor, 0));
             renderPanel1.Invalidate();
@@ -107,6 +110,7 @@ namespace Assignment5
 
         private void MenuItemTranslateDown_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
             World.Shape.Transform(Matrix.TranslationMatrix(0, -_tranV / renderPanel1.ScaleFactor, 0));
             renderPanel1.Invalidate();
@@ -114,122 +118,145 @@ namespace Assignment5
 
         private void MenuItemTranslateLeft_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
             World.Shape.Transform(Matrix.TranslationMatrix(-_tranH / renderPanel1.ScaleFactor, 0, 0));
             renderPanel1.Invalidate();
         }
         private void MenuItemTranslateRight_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
             World.Shape.Transform(Matrix.TranslationMatrix(_tranH / renderPanel1.ScaleFactor, 0, 0));
             renderPanel1.Invalidate();
         }
         private void MenuItemScaleUp_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
             World.Shape.TransformAboutPoint(
-                World.Shape.Points[0],
-                //World.Shape.Centroid,
+                World.Shape.Centroid,
                 Matrix.ScaleMatrix(_scaleup, _scaleup, _scaleup));
             renderPanel1.Invalidate();
         }
         private void MenuItemScaleDown_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
             World.Shape.TransformAboutPoint(
-                World.Shape.Points[0],
-                //World.Shape.Centroid,
+                World.Shape.Centroid,
                 Matrix.ScaleMatrix(_scaledown, _scaledown, _scaledown));
             renderPanel1.Invalidate();
         }
         private void MenuItemRotateX_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
-            RotateX(sender, e);
+            RotateX(sender, e, _rot);
         }
         private void MenuItemRotateY_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
-            RotateY(sender, e);
+            RotateY(sender, e, _rot);
         }
         private void MenuItemRotateZ_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
-            RotateZ(sender, e);
+            RotateZ(sender, e, _rot);
         }
         private void MenuItemReset_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
             World.Shape.Reset();
             renderPanel1.Invalidate();
         }
         private void MenuItemShearRight_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
             World.Shape.TransformAboutPoint(World.Shape.Points[World.Shape.Points.Rows - 1], Matrix.ShearXWRTYMatrix(_shear));
-            //World.Shape.Transform(Matrix.ShearXWRTYMatrix(_shear));
-            //Vector c = World.Shape.Centroid;
-            //double min = World.Shape.MinY;
-            //World.Shape.TransformAboutPoint(
-            //    new Vector(c.X, min, c.Z),
-            //    Matrix.ShearXWRTYMatrix(_shear));
             renderPanel1.Invalidate();
         }
         private void MenuItemShearLeft_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
             World.Shape.TransformAboutPoint(World.Shape.Points[World.Shape.Points.Rows - 1], Matrix.ShearXWRTYMatrix(-_shear));
-            //World.Shape.Transform(Matrix.ShearXWRTYMatrix(-_shear));
-            //Vector c = World.Shape.Centroid;
-            //double min = World.Shape.MinY;
-            //World.Shape.TransformAboutPoint(
-            //    new Vector(c.X, min, c.Z),
-            //    Matrix.ShearXWRTYMatrix(-_shear));
             renderPanel1.Invalidate();
         }
-        private void RotateX(object sender, EventArgs e)
+        private void RotateX(object sender, EventArgs e, double theta)
         {
             World.Shape.TransformAboutPoint(
-                World.Shape.Points[0],
-                //World.Shape.Centroid,
-                Matrix.RotationMatrixX(_rot));
+                World.Shape.Centroid,
+                Matrix.RotationMatrixX(theta));
             renderPanel1.Invalidate();
         }
-        private void RotateY(object sender, EventArgs e)
+        private void RotateY(object sender, EventArgs e, double theta)
         {
             World.Shape.TransformAboutPoint(
-                World.Shape.Points[0],
-                //World.Shape.Centroid,
-                Matrix.RotationMatrixY(_rot));
+                World.Shape.Centroid,
+                Matrix.RotationMatrixY(theta));
             renderPanel1.Invalidate();
         }
-        private void RotateZ(object sender, EventArgs e)
+        private void RotateZ(object sender, EventArgs e, double theta)
         {
             World.Shape.TransformAboutPoint(
-                World.Shape.Points[0],
-                //World.Shape.Centroid,
-                Matrix.RotationMatrixZ(_rot));
+                World.Shape.Centroid,
+                Matrix.RotationMatrixZ(theta));
             renderPanel1.Invalidate();
+        }
+        private void RotateXDeltaTime(object sender, EventArgs e)
+        {
+            long ticks = DateTime.Now.Ticks;
+            if (_ticks != 0)
+            {
+                RotateX(sender, e, _rotrate * (ticks - _ticks));
+            }
+            _ticks = ticks;
+        }
+        private void RotateYDeltaTime(object sender, EventArgs e)
+        {
+            long ticks = DateTime.Now.Ticks;
+            if (_ticks != 0)
+            {
+                RotateY(sender, e, _rotrate * (ticks - _ticks));
+            }
+            _ticks = ticks;
+        }
+        private void RotateZDeltaTime(object sender, EventArgs e)
+        {
+            long ticks = DateTime.Now.Ticks;
+            if (_ticks != 0)
+            {
+                RotateZ(sender, e, _rotrate * (ticks - _ticks));
+            }
+            _ticks = ticks;
         }
         private void MenuItemRotateXInfinity_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
             timer = new System.Timers.Timer(_interval);
-            timer.Elapsed += new ElapsedEventHandler(RotateX);
+            timer.Elapsed += new ElapsedEventHandler(RotateXDeltaTime);
             timer.Start();
         }
         private void MenuItemRotateYInfinity_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
             timer = new System.Timers.Timer(_interval);
-            timer.Elapsed += new ElapsedEventHandler(RotateY);
+            timer.Elapsed += new ElapsedEventHandler(RotateYDeltaTime);
             timer.Start();
         }
         private void MenuItemRotateZInfinity_Click(object sender, EventArgs e)
         {
+            _ticks = 0;
             timer.Stop();
             timer = new System.Timers.Timer(_interval);
-            timer.Elapsed += new ElapsedEventHandler(RotateZ);
+            timer.Elapsed += new ElapsedEventHandler(RotateZDeltaTime);
             timer.Start();
         }
     }

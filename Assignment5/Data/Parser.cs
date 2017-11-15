@@ -27,7 +27,8 @@ namespace Assignment5.Data
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine($"REEEEEEEEEEEEEEEEEEEEEEEEE { e }");
+                    //Console.Error.WriteLine($"REEEEEEEEEEEEEEEEEEEEEEEEE { e }");
+                    Console.Error.WriteLine("String not correct Point format");
                 }
             }
             points.Add(new Vector(0, 0, 0));
@@ -47,7 +48,8 @@ namespace Assignment5.Data
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine(e);
+                    Console.Error.WriteLine("String not correct Line format");
+                    //Console.Error.WriteLine(e);
                 }
             }
             return linesList.ToArray();

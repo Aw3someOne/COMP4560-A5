@@ -12,7 +12,8 @@ namespace Assignment5.Model
     {
         public Matrix Points { get; set; }
         public Tuple<int, int>[] Lines { get; set; }
-        public Vector Centroid { get => new Vector(MidX, MidY, MidZ); }
+        //public Vector Centroid { get => new Vector(MidX, MidY, MidZ); }
+        public Vector Centroid { get => Points[0]; }
         public double DeltaX { get => Delta(0); }
         public double DeltaY { get => Delta(1); }
         public double DeltaZ { get => Delta(2); }
