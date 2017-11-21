@@ -11,6 +11,7 @@ namespace Math3D
         public Vector this[int row] { get => M[row]; set { M[row] = value; } }
         public double this[int row, int col] { get => M[row][col]; set { M[row][col] = value; } }
 
+        // multiply a vector v by the matrix m
         public static Vector operator *(Vector v, Matrix m)
         {
             if (v.Size != m.Rows)
@@ -29,9 +30,7 @@ namespace Math3D
             return r;
         }
 
-        /*
-         * Matrix multiplication. Note: m1 * m2 DOES NOT EQUAL m2 * m1, and might not even be possible
-         */
+        // Matrix multiplication. Note: m1 * m2 DOES NOT EQUAL m2 * m1, and might not even be possible
         public static Matrix operator *(Matrix lhs, Matrix rhs)
         {
             if (lhs.Columns != rhs.Rows)
@@ -42,21 +41,11 @@ namespace Math3D
             for (int row = 0; row < lhs.Rows; row++)
             {
                 r[row] = lhs[row] * rhs;
-                //for (int col = 0; col < rhs.Columns; col++)
-                //{
-                //    r[row, col] = 0;
-                //    for (int i = 0; i < lhs.Columns; i++)
-                //    {
-                //        r[row, col] += lhs[row, i] * rhs[i, col];
-                //    }
-                //}
             }
             return r;
         }
 
-        /*
-         * Multiple matrix by some constant c
-         */
+        // Multiple matrix by some constant c
         public static Matrix operator *(Matrix m, double c)
         {
             Matrix r = new Matrix(m);
@@ -72,9 +61,7 @@ namespace Math3D
 
         public static Matrix operator *(double c, Matrix m) => m * c;
 
-        /*
-         * Divide matrix by a constant c
-         */
+        // Divide matrix by a constant c
         public static Matrix operator /(Matrix m, double c) => m * (1d / c);
     }
 }

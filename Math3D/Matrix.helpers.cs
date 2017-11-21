@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Math3D
 {
+    // Contains static helper functions
     public partial class Matrix
     {
+        // returns a scaling matrix
         public static Matrix ScaleMatrix(double sx, double sy, double sz)
             => new Matrix(
                 new Vector(sx, 0, 0, 0),
@@ -17,6 +19,7 @@ namespace Math3D
 
         public static Matrix TranslationMatrix(Vector v) => TranslationMatrix(v.X, v.Y, v.Z);
 
+        // returns a translation matrix
         public static Matrix TranslationMatrix(double dx, double dy, double dz)
             => new Matrix(
                 new Vector(1, 0, 0, 0),
@@ -24,6 +27,7 @@ namespace Math3D
                 new Vector(0, 0, 1, 0),
                 new Vector(dx, dy, dz, 1));
 
+        // returns a rotation matrix about the x-axis, from +y to +z
         public static Matrix RotationMatrixX(double rad)
         {
             double c = Math.Cos(rad);
@@ -35,6 +39,7 @@ namespace Math3D
                 new Vector(0, 0, 0, 1));
         }
 
+        // returns a rotation matrix about the y-axis, from +x to +z
         public static Matrix RotationMatrixY(double rad)
         {
             double c = Math.Cos(rad);
@@ -46,6 +51,7 @@ namespace Math3D
                 new Vector(0, 0, 0, 1));
         }
 
+        // returns a rotation matrix about the z-axis, from +x to +y
         public static Matrix RotationMatrixZ(double rad)
         {
             double c = Math.Cos(rad);
@@ -57,6 +63,7 @@ namespace Math3D
                 new Vector(0, 0, 0, 1));
         }
 
+        // returns a shearing matrix x with respect to y
         public static Matrix ShearXWRTYMatrix(double ratio)
         {
             return new Matrix(
@@ -66,6 +73,7 @@ namespace Math3D
                 new Vector(0, 0, 0, 1));
         }
 
+        // returns an identity matrix row X row
         public static Matrix IdentityMatrix(int row)
         {
             Matrix m = new Matrix(row, row);
@@ -76,6 +84,7 @@ namespace Math3D
             return m;
         }
 
+        // returns a transformation matrix that is the orthographic matrix from p1 looking at p2
         public static Matrix OrthographicProjectionMatrix(Vector p1, Vector p2)
         {
             Vector n = (p2 - p1).Unit;

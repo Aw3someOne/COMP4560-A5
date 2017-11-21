@@ -54,6 +54,7 @@ namespace Math3D
             }
         }
 
+        // Transforms the matrix about a point p, by each of matrices in m by calculating tNet
         public void TransformAboutPoint(Vector p, params Matrix[] m)
         {
             Matrix tNet = Matrix.TranslationMatrix(-p);
@@ -68,6 +69,7 @@ namespace Math3D
             }
         }
 
+        // Transforms the matrix by each of the matrices in m by calculating tNet
         public void Transform(params Matrix[] m)
         {
             Matrix tNet = new Matrix(m[0]);

@@ -51,6 +51,7 @@ namespace Math3D
 
         public Vector(Vector v) : this(v.V) { }
 
+        // Transforms the vector by matrix m
         public void Transform(Matrix m)
         {
             Vector v = Homogenous;
@@ -63,6 +64,7 @@ namespace Math3D
             Transform(Matrix.TranslationMatrix(dx, dy, dz));
         }
 
+        // Dot product
         public static double Dot(Vector lhs, Vector rhs)
         {
             if (lhs.Size != rhs.Size)
@@ -77,6 +79,7 @@ namespace Math3D
             return sumproduct;
         }
 
+        // Cross product
         public static Vector Cross(Vector lhs, Vector rhs)
         {
             if (!(lhs.Size == 3 && rhs.Size == 3))
